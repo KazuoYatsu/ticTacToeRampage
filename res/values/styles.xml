@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -16,5 +16,62 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+
+    
+    <style name="DefaultStyle">
+        <item name="android:background">@color/app_background</item>
+        <item name="android:layout_width">55dp</item>
+        <item name="android:layout_height">55dp</item>
+    </style>
+    
+    <style name="LeftTopRowStyle" parent="@style/DefaultStyle">
+        <item name="android:layout_marginBottom">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+    </style>
+    
+    <style name="MiddleTopRowStyle" parent="@style/DefaultStyle">
+        <item name="android:layout_marginBottom">@dimen/default_margin</item>
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+    </style>
+    
+    <style name="RightTopRowStyle" parent="@style/DefaultStyle">
+        <item name="android:layout_marginBottom">@dimen/default_margin</item>
+        <item name="android:paddingRight">@dimen/default_margin</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+    </style>
+    
+    <style name="LeftMidRowStyle" parent="@style/LeftTopRowStyle"></style>
+    <style name="MiddleMidRowStyle" parent="@style/MiddleTopRowStyle"></style>
+    <style name="RightMidRowStyle" parent="@style/RightTopRowStyle"></style>
+    
+    <style name="LeftBotRowStyle" parent="@style/DefaultStyle">
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:paddingBottom">@dimen/default_margin</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+    </style>
+    
+    <style name="MiddleBotRowStyle" parent="@style/DefaultStyle">
+        <item name="android:layout_marginRight">@dimen/default_margin</item>
+        <item name="android:paddingBottom">@dimen/default_margin</item>
+        <item name="android:paddingTop">@dimen/default_margin</item>
+        <item name="android:paddingLeft">@dimen/default_margin</item>
+    </style>
+    
+    <style name="RightBotRowStyle" parent="@style/DefaultStyle">
+        <item name="android:padding">@dimen/default_margin</item>
+    </style>
+    
+    <style name="TextStyle">
+        <item name="android:textColor">@color/display_color</item>
+        <item name="android:textSize">@dimen/display_font_size</item>
+    </style>
+    
+    
 
 </resources>

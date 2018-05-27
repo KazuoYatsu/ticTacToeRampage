@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="grid_color">#e8eaf6</color>
+    <color name="stick_color">#aaaaaa</color>
+    <color name="display_color">#dddddd</color>
+    <color name="app_background">#3949ab</color>
+</resources>
