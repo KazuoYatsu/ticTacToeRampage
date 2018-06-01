@@ -35,7 +35,7 @@ public final class R {
         public static final int ic_launcher=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a001a;
+        public static final int action_settings=0x7f0a001b;
         public static final int block_1=0x7f0a0004;
         public static final int block_10=0x7f0a000d;
         public static final int block_11=0x7f0a000e;
@@ -59,8 +59,9 @@ public final class R {
         public static final int player1_points=0x7f0a0015;
         public static final int player2_label=0x7f0a0016;
         public static final int player2_points=0x7f0a0017;
+        public static final int regras_button=0x7f0a0019;
         public static final int replay_image=0x7f0a0001;
-        public static final int sobre_button=0x7f0a0019;
+        public static final int sobre_button=0x7f0a001a;
         public static final int tabuleiro=0x7f0a0003;
     }
     public static final class integer {
@@ -86,7 +87,8 @@ public final class R {
         public static final int jogador_cruz_vez=0x7f070007;
         public static final int jogar=0x7f07000a;
         public static final int menu=0x7f070004;
-        public static final int sobre=0x7f07000b;
+        public static final int regras=0x7f07000b;
+        public static final int sobre=0x7f07000c;
         public static final int title_activity_game=0x7f070003;
     }
     public static final class style {

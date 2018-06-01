@@ -32,9 +32,15 @@
                 android:text="@string/jogar" />
 
             <Button
+                android:id="@+id/regras_button"
+                style="@style/MenuButtonStyle"
+                android:text="@string/regras" />
+            
+            <Button
                 android:id="@+id/sobre_button"
                 style="@style/MenuButtonStyle"
                 android:text="@string/sobre" />
+            
         </LinearLayout>
 
     </GridLayout>

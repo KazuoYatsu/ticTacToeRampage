@@ -16,8 +16,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		final Button jogarButton = (Button) findViewById(R.id.jogar_button);
-		final Button sobreButton = (Button) findViewById(R.id.sobre_button);
+		final Button jogarButton  = (Button) findViewById(R.id.jogar_button);
+		final Button regrasButton = (Button) findViewById(R.id.regras_button);
+		final Button sobreButton  = (Button) findViewById(R.id.sobre_button);
 		
 		jogarButton.setOnClickListener(new OnClickListener() {
 			

@@ -12,5 +12,6 @@
 	<string name="jogador_bola_vez">Jogador Bola</string>
 	<string name="fim_de_jogo">Fim de jogo!</string>
 	<string name="jogar">Jogar</string>
+	<string name="regras">Regras</string>
 	<string name="sobre">Sobre</string>
 </resources>
