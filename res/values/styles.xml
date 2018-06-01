@@ -72,6 +72,14 @@
         <item name="android:textSize">@dimen/display_font_size</item>
     </style>
     
+    <style name="MenuButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+    </style>
+    
     
 
 </resources>
