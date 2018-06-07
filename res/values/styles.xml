@@ -72,6 +72,11 @@
         <item name="android:textSize">@dimen/display_font_size</item>
     </style>
     
+    <style name="TitleStyle">
+        <item name="android:textColor">@color/display_color</item>
+        <item name="android:textSize">@dimen/title_font_size</item>
+    </style>
+    
     <style name="MenuButtonStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -20,15 +20,18 @@ public class MainActivity extends Activity {
 		final Button regrasButton = (Button) findViewById(R.id.regras_button);
 		final Button sobreButton  = (Button) findViewById(R.id.sobre_button);
 		
-		jogarButton.setOnClickListener(new OnClickListener() {
-			
+		jogarButton.setOnClickListener(OpenActivity(GameActivity.class));
+		regrasButton.setOnClickListener(OpenActivity(RulesActivity.class));		
+		sobreButton.setOnClickListener(OpenActivity(AboutActivity.class));
+	}
+	
+	private OnClickListener OpenActivity (final Class activityClass) {
+		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, GameActivity.class);
+				Intent intent = new Intent(MainActivity.this, activityClass);
 				startActivity(intent);
-				
 			}
-		});
-		
+		};
 	}
 }

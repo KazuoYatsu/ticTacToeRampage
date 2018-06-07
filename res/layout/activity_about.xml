@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/app_background">
+
+    <TextView
+        android:id="@+id/txtAboutAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/tictactoerampage"
+        style="@style/TitleStyle"
+        android:padding="15sp" />
+        
+    <TextView
+        android:id="@+id/txtAboutVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vers_o_1_0_0"
+        android:padding="10sp"
+		style="@style/TextStyle"/>
+
+    <TextView
+        android:id="@+id/txtAboutAuthors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/autores_arthur_carvalho_eullen_silva_felipe_kazuo_e_jo_o_marcelo" 
+        android:padding="10sp"
+        style="@style/TextStyle"/>
+
+    <TextView
+        android:id="@+id/txtAboutMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/o_tic_tac_toe_rampage_um_jogo_da_velha_4x4_desenvolvido_como_trabalho_para_a_disciplina_desenvolvimento_de_aplica_es_mobile_para_informa_es_referentes_as_regras_do_jogo_clique_no_bot_o_abaixo_" 
+        android:padding="10sp"
+        style="@style/TextStyle"/>
+
+    <Button
+        android:id="@+id/btnCloseAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="@android:color/white"
+        style="?android:attr/buttonBarButtonStyle"
+        android:text="@string/fechar" />
+    
+</LinearLayout>
