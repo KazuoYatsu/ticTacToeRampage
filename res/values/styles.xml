@@ -85,6 +85,10 @@
         <item name="android:layout_marginBottom">3dp</item>
     </style>
     
+    <style name="PlayerLabel" parent="@style/TitleStyle">
+        <item name="android:layout_marginEnd">20sp</item>
+    </style>
+    
     
 
 </resources>

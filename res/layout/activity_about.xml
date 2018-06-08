@@ -30,7 +30,7 @@
         android:id="@+id/txtAboutAuthors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/autores_arthur_carvalho_eullen_silva_felipe_kazuo_e_jo_o_marcelo" 
+        android:text="@string/autores" 
         android:padding="10sp"
         style="@style/TextStyle"/>
 
@@ -38,7 +38,7 @@
         android:id="@+id/txtAboutMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/o_tic_tac_toe_rampage_um_jogo_da_velha_4x4_desenvolvido_como_trabalho_para_a_disciplina_desenvolvimento_de_aplica_es_mobile_para_informa_es_referentes_as_regras_do_jogo_clique_no_bot_o_abaixo_" 
+        android:text="@string/descricao" 
         android:padding="10sp"
         style="@style/TextStyle"/>
 

@@ -19,14 +19,45 @@
         android:padding="15sp"
         android:text="@string/regras" />
         
-    <TextView
-        android:id="@+id/txtRules"
-        style="@style/TextStyle"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10sp"
-        android:layout_weight="1"
-        android:text="• O Tic Tac Toe Rampage pode ser jogado ser jogado por 1 ou 2 jogadores. \n• O jogador com a maior pontuação ao final do preenchimento do último campo disponível é o vencedor.\n• O jogador pontua ao:\n		• Completar uma linha, coluna ou diagonal com 3 símbolos iguais - ( x Pontos)\n		• Completar uma linha, coluna ou diagonal com 4 símbolos iguais - ( x Pontos)" />
+        android:layout_weight="1">
+        <TextView 
+            style="@style/TextStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/regra1"
+            />
+        <TextView 
+            style="@style/TextStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/regra2"
+            />
+        <TextView 
+            style="@style/TextStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/regra3"
+            />
+        <TextView 
+            style="@style/TextStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="10sp"
+	        android:text="@string/regra4"
+            />
+        <TextView 
+            style="@style/TextStyle"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="10sp"
+	        android:text="@string/regra5"
+            />
+        
+    </LinearLayout>
 
    	    <Button
    	        android:id="@+id/btnCloseRules"

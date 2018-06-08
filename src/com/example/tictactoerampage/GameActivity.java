@@ -2,6 +2,8 @@ package com.example.tictactoerampage;
 
 import android.R.drawable;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.media.Image;
 import android.os.Bundle;
@@ -106,5 +108,25 @@ public class GameActivity extends Activity implements View.OnClickListener{
 		camposRestantes = MAX;
 		replay.setVisibility(View.GONE);	 
 		mudarVez(BOLA);
+	}
+	
+	private void showQuitGame() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Deseja sair?");
+		builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int id) {
+        	   finish();
+           }
+		});
+		builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int id) { }
+		});
+		AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		showQuitGame();
 	}
 }

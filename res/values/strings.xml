@@ -16,10 +16,16 @@
     <string name="sobre">Sobre</string>
     <string name="tictactoerampage">TicTacToeRampage</string>
     <string name="vers_o_1_0_0">Versão: 1.0.0</string>
-    <string name="autores_arthur_carvalho_eullen_silva_felipe_kazuo_e_jo_o_marcelo">Autores: Arthur Carvalho, Eullen Silva, Felipe Kazuo e João Marcelo</string>
-    <string name="o_tic_tac_toe_rampage_um_jogo_da_velha_4x4_desenvolvido_como_trabalho_para_a_disciplina_desenvolvimento_de_aplica_es_mobile_para_informa_es_referentes_as_regras_do_jogo_clique_no_bot_o_abaixo_">O Tic Tac Toe RAMPAGE é um jogo da velha 4x4, desenvolvido como trabalho para a disciplina Desenvolvimento de Aplicações Mobile. Para informações referentes as regras do jogo, clique no botão abaixo.</string>
+    <string name="autores">Autores: Arthur Carvalho, Eullen Silva, Felipe Kazuo e João Marcelo</string>
+    <string name="descricao">O Tic Tac Toe RAMPAGE é um jogo da velha 4x4, desenvolvido como trabalho para a disciplina Desenvolvimento de Aplicações Mobile. Para informações referentes as regras do jogo, clique no botão abaixo.</string>
     <string name="fechar">Fechar</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_rules">RulesActivity</string>
+    <string name="regra1">• O Tic Tac Toe Rampage pode ser jogado ser jogado por 1 ou 2 jogadores.</string>
+    <string name="regra2">• O jogador com a maior pontuação ao final do preenchimento do último campo disponível é o vencedor.</string>
+    <string name="regra3">• O jogador pontua ao:</string>
+    <string name="regra4">• Completar uma linha, coluna ou diagonal com 3 símbolos iguais - ( x Pontos)</string>
+    <string name="regra5">• Completar uma linha, coluna ou diagonal com 4 símbolos iguais - ( x Pontos)</string>
+    
 
 </resources>
