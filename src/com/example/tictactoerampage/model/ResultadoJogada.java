@@ -1,4 +1,4 @@
-package model;
+package com.example.tictactoerampage.model;
 
 import java.io.Serializable;
 import java.util.List;

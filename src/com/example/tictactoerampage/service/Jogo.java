@@ -1,13 +1,15 @@
-package service;
+package com.example.tictactoerampage.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import model.EstadoJogo;
-import model.PosicaoPontuacao;
-import model.ResultadoJogada;
-import model.TipoPontuacao;
-import model.TipoRegistroJogada;
+import com.example.tictactoerampage.model.EstadoJogo;
+import com.example.tictactoerampage.model.PosicaoPontuacao;
+import com.example.tictactoerampage.model.ResultadoJogada;
+import com.example.tictactoerampage.model.TipoPontuacao;
+import com.example.tictactoerampage.model.TipoRegistroJogada;
+
+
 
 public class Jogo {
 	private EstadoJogo estado;
@@ -42,8 +44,9 @@ public class Jogo {
 	}
 
 	public void reiniciar() {
-		this.posicaoPontuacaoP1 = new ArrayList<>();
-		this.posicaoPontuacaoP2 = new ArrayList<>();
+		// Tive que mexer nessa linha e colocar o tipo PosicaoPontuacao
+		this.posicaoPontuacaoP1 = new ArrayList<PosicaoPontuacao>();
+		this.posicaoPontuacaoP2 = new ArrayList<PosicaoPontuacao>();
 		this.estado = new EstadoJogo();
 		
 		this.jogada = new ResultadoJogada();
