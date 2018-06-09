@@ -31,6 +31,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 	private TextView vezTextView;
 	private Resources resources;
 	private ImageView replay;
+	private GridLayout tabuleiro; 
 	private int MAX = 16;
 	private int turno; //Quem começa, mas podemos sortear
 	private int camposRestantes = MAX;
@@ -43,6 +44,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 		
 		resources = getResources();
 		vezTextView = (TextView) findViewById(R.id.jogador_vez_textView);
+		tabuleiro   = (GridLayout) findViewById(R.id.tabuleiro);
 		
 		mudarVez(BOLA);
 		
@@ -68,9 +70,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
 	// Usdo para implementar toda a ação dos Botões do tabuleiro
 	@Override
 	public void onClick(View v) {
-		ImageView campo = new ImageViewDecorator((ImageView) v);
-	
-		String posMatriz = "";
+		ImageView campo = (ImageView) v;
+		
+		int pos = tabuleiro.indexOfChild((ImageView)v);
+		int linha = pos /4;
+		int coluna = pos % 4;
+		
+		Log.d("Linha x Coluna", String.valueOf(linha) + "|" + String.valueOf(coluna));
 		
 		if(campo.isEnabled()) {
 			switch(turno) {
