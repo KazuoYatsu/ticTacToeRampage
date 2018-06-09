@@ -10,8 +10,6 @@ import com.example.tictactoerampage.model.ResultadoJogada;
 import com.example.tictactoerampage.model.TipoPontuacao;
 import com.example.tictactoerampage.model.TipoRegistroJogada;
 
-
-
 public class Jogo {
 	private EstadoJogo estado;
 	private TipoRegistroJogada[][] tabuleiro;
@@ -29,13 +27,17 @@ public class Jogo {
 	public ResultadoJogada jogar(Celula celula) throws RuntimeException{
 		if(this.tabuleiro[celula.getLinha()][celula.getColuna()] != null)
 			throw new RuntimeException();
+
 		this.marcarPosicao(celula);
 		this.percorrerDiagonalCrescente(celula);
 		this.percorrerDiagonalDecrescente(celula);
 		this.percorrerHorizontalmente(celula);
 		this.percorrerVerticalmente(celula);
+		
 		this.trocarJogador();
+
 		this.verificarFimDeJogo();
+
 		return this.jogada;
 	}
 
@@ -61,21 +63,20 @@ public class Jogo {
 
 	private void percorrerDiagonalDecrescente(Celula celula) {
 		int marcacoesConsecutivas = 0;
+
 		int indiceX = celula.getLinha();
 		int indiceY = celula.getColuna();
 		
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.DIAGONAL_DECRESCENTE);
 		
-		indiceX = 0;
-		indiceY = 3;
 		//encontrar inicio
-		//while (indiceX != 0 || indiceY != 4) {
-			//indiceX -= 1;
-			//indiceY += 1;
-		//}
+		while (indiceX != 0 && indiceY != 3) {
+			indiceX -= 1;
+			indiceY += 1;
+		}
 		
 		//percorrer até o fim para contar pontos
-		while (indiceX > 0 && indiceY > 0 && indiceX < 4 && indiceY < 4) {
+		while (indiceX != 4 && indiceY != -1) {
 			if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
 				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
 					posicaoPontuacao.setxIni(indiceX);
@@ -100,12 +101,19 @@ public class Jogo {
 
 	private void percorrerDiagonalCrescente(Celula celula) {
 		int marcacoesConsecutivas = 0;
-		int indiceX = 0;
-		int indiceY = 3;
+
+		int indiceX = celula.getLinha();
+		int indiceY = celula.getColuna();
+
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.DIAGONAL_CRESCENTE);
 		
+		while (indiceX != 0 && indiceY != 0) {
+			indiceX -= 1;
+			indiceY -= 1;
+		}
+
 		//percorrer até o fim para contar pontos
-		while (indiceX > 0 && indiceY > 0 && indiceX < 4 && indiceY < 4) {
+		while (indiceX != 4 && indiceY != 4) {
 			if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
 				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
 					posicaoPontuacao.setxIni(indiceX);
@@ -195,8 +203,8 @@ public class Jogo {
 	}
 
 	private void atualizarPosicao(int novosPontos, PosicaoPontuacao posicaoPontuacao) {
-		boolean pontuado 				= false;
-		List<PosicaoPontuacao> posicoes = (this.jogador.equals(TipoRegistroJogada.P1))?this.posicaoPontuacaoP1:this.posicaoPontuacaoP2;
+		boolean pontuado 				= false; //padrao anos 90? muito trabalho manter isso ctr + shift + f fode todo o trabalho
+		List<PosicaoPontuacao> posicoes = (this.jogador.equals(TipoRegistroJogada.P1)) ? this.posicaoPontuacaoP1 : this.posicaoPontuacaoP2;
 		
 		for(PosicaoPontuacao posicao: posicoes) {
 			if(this.foiPontuado(posicaoPontuacao, posicoes)) {
