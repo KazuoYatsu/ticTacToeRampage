@@ -9,6 +9,7 @@ public class ResultadoJogada implements Serializable{
 	
 	List<PosicaoPontuacao> pontuacaoP1;
 	List<PosicaoPontuacao> pontuacaoP2;
+	//aqui tem os pontos
 	EstadoJogo estado;
 	
 	public List<PosicaoPontuacao> getPontuacaoP1() {

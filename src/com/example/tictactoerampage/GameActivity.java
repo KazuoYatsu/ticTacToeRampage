@@ -1,6 +1,7 @@
 package com.example.tictactoerampage;
 
 import com.example.tictactoerampage.model.Celula;
+import com.example.tictactoerampage.model.ResultadoJogada;
 import com.example.tictactoerampage.model.TipoRegistroJogada;
 import com.example.tictactoerampage.service.Jogo;
 import com.example.tictactoerampage.service.Jogo.JogoListener;
@@ -78,8 +79,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
 		ImageView campo = (ImageView) v;
 		Celula celula   = obterCelula(campo);
 		Log.d("inf", "clicou");
-		jogo.jogar(celula);
+		ResultadoJogada resultadoJogada = jogo.jogar(celula);
 		Log.d("inf", "jogou");
+		Log.d("Jogador1","result: "+resultadoJogada.getEstado().getP1().toString());
+		Log.d("Jogador2","result: "+resultadoJogada.getEstado().getP2().toString());
 		if(campo.isEnabled()) {
 			switch(turno) {
 				case CRUZ:{
@@ -123,6 +126,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 	
 	private void reset() {
 		GridLayout tabuleiro = (GridLayout) findViewById(R.id.tabuleiro);
+		jogo.reiniciar();
 		int gridCount = tabuleiro.getChildCount();
 		for(int i =0; i < gridCount;i++) {
 			ImageView campo = (ImageView) tabuleiro.getChildAt(i);

@@ -132,7 +132,7 @@ public class Jogo {
 		int marcacoesConsecutivas = 0;
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.HORIZONTAL);
 		int y = celula.getColuna();
-		for(int i = 0 ; i < 3 ; i++) {
+		for(int i = 0 ; i < 4 ; i++) {
 			if (this.isJogador(this.tabuleiro[i][y])) {
 				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
 					posicaoPontuacao.setxIni(i);
@@ -191,16 +191,12 @@ public class Jogo {
 		default:
 			return;
 		}
-
-		if(this.jogador.equals(TipoRegistroJogada.P1)) {
-			atualizarPosicao(pontos, this.estado.getP1(), posicaoPontuacao, this.posicaoPontuacaoP1);
-		}else {
-			atualizarPosicao(pontos, this.estado.getP2(), posicaoPontuacao, this.posicaoPontuacaoP2);
-		}
+		atualizarPosicao(pontos, posicaoPontuacao);
 	}
 
-	private void atualizarPosicao(int novosPontos, Integer pontuacao, PosicaoPontuacao posicaoPontuacao, List<PosicaoPontuacao> posicoes) {
-		boolean pontuado = false;
+	private void atualizarPosicao(int novosPontos, PosicaoPontuacao posicaoPontuacao) {
+		boolean pontuado 				= false;
+		List<PosicaoPontuacao> posicoes = (this.jogador.equals(TipoRegistroJogada.P1))?this.posicaoPontuacaoP1:this.posicaoPontuacaoP2;
 		
 		for(PosicaoPontuacao posicao: posicoes) {
 			if(this.foiPontuado(posicaoPontuacao, posicoes)) {
@@ -215,8 +211,12 @@ public class Jogo {
 				novosPontos += 4;
 			posicoes.add(posicaoPontuacao);
 		}
-		
-		pontuacao += novosPontos;
+
+		if (this.jogador.equals(TipoRegistroJogada.P1)){
+			this.estado.setP1(this.estado.getP1()+novosPontos);
+		}else {
+			this.estado.setP2(this.estado.getP2()+novosPontos);			
+		}
 	}
 	
 	private boolean foiPontuado(PosicaoPontuacao posicaoPontuacao, List<PosicaoPontuacao> posicoes) {
