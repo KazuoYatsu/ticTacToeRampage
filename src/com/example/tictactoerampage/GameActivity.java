@@ -1,6 +1,11 @@
 package com.example.tictactoerampage;
 
+import com.example.tictactoerampage.model.TipoRegistroJogada;
+import com.example.tictactoerampage.service.Jogo;
+import com.example.tictactoerampage.service.Jogo.JogoListener;
+
 import android.R.drawable;
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -29,6 +34,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 	private int MAX = 16;
 	private int turno; //Quem começa, mas podemos sortear
 	private int camposRestantes = MAX;
+	private Jogo jogo;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +54,30 @@ public class GameActivity extends Activity implements View.OnClickListener{
 			}
 		});
 		
+		jogo = new Jogo(new JogoListener() {
+			
+			@Override
+			public void fimDeJogo(TipoRegistroJogada vencedor) {
+				Toast.makeText(getApplicationContext(), vencedor.toString(), Time.SECOND * 3).show();
+			}
+		});
+		
 	}
 	
 	
-	// Usado para implementar toda a ação dos Botões do tabuleiro
+	// Usdo para implementar toda a ação dos Botões do tabuleiro
 	@Override
 	public void onClick(View v) {
-		ImageView campo = (ImageView) v;
+		ImageView campo = new ImageViewDecorator((ImageView) v);
+	
+		String posMatriz = "";
 		
 		if(campo.isEnabled()) {
 			switch(turno) {
 				case CRUZ:{
 						campo.setImageDrawable(resources.getDrawable(CRUZ_IMG_RESOURCE));
 						mudarVez(BOLA);
+						
 					break;
 				}
 				case BOLA:{

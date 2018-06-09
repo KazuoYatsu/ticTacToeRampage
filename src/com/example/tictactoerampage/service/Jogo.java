@@ -71,31 +71,31 @@ public class Jogo {
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.DIAGONAL_DECRESCENTE);
 		
 		//encontrar inicio
-				while (indiceX != 0 || indiceY != 4) {
-					indiceX -= 1;
-					indiceY += 1;
+		while (indiceX != 0 || indiceY != 4) {
+			indiceX -= 1;
+			indiceY += 1;
+		}
+		
+		//percorrer até o fim para contar pontos
+		while (indiceX != 0 || indiceY != 0) {
+			if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
+				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
+					posicaoPontuacao.setxIni(indiceX);
+					posicaoPontuacao.setyIni(indiceY);
+				} else {
+					posicaoPontuacao.setxFim(indiceX);
+					posicaoPontuacao.setyFim(indiceY);
 				}
-				
-				//percorrer até o fim para contar pontos
-				while (indiceX != 0 || indiceY != 0) {
-					if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
-						if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
-							posicaoPontuacao.setxIni(indiceX);
-							posicaoPontuacao.setyIni(indiceY);
-						} else {
-							posicaoPontuacao.setxFim(indiceX);
-							posicaoPontuacao.setyFim(indiceY);
-						}
-						marcacoesConsecutivas += 1;
-					}else {
-						if(marcacoesConsecutivas < 3) {
-							posicaoPontuacao.resetPosicao();
-							marcacoesConsecutivas = 0;
-						}
-					}
-					indiceX += 1;
-					indiceY -= 1;
+				marcacoesConsecutivas += 1;
+			}else {
+				if(marcacoesConsecutivas < 3) {
+					posicaoPontuacao.resetPosicao();
+					marcacoesConsecutivas = 0;
 				}
+			}
+			indiceX += 1;
+			indiceY -= 1;
+		}
 		
 		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
 	}

@@ -34,67 +34,67 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/block_1"
+            android:id="@+id/P0_0"
             style="@style/LeftTopRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_2"
+            android:id="@+id/P0_1"
             style="@style/MiddleTopRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_3"
+            android:id="@+id/P0_2"
             style="@style/MiddleTopRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_4"
+            android:id="@+id/P0_3"
             style="@style/RightTopRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_5"
+            android:id="@+id/P1_0"
             style="@style/LeftMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_6"
+            android:id="@+id/P1_1"
             style="@style/MiddleMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_7"
+            android:id="@+id/P1_2"
             style="@style/MiddleMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_8"
+            android:id="@+id/P1_3"
             style="@style/RightMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_9"
+            android:id="@+id/P2_0"
             style="@style/LeftMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_10"
+            android:id="@+id/P2_1"
             style="@style/MiddleMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_11"
+            android:id="@+id/P2_2"
             style="@style/MiddleMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_12"
+            android:id="@+id/P2_3"
             style="@style/RightMidRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_13"
+            android:id="@+id/P3_0"
             style="@style/LeftBotRowStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_14"
+            android:id="@+id/P3_1"
             style="@style/DefaultStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_15"
+            android:id="@+id/P3_2"
             style="@style/DefaultStyle"
             android:onClick="onClick"/>
         <ImageView
-            android:id="@+id/block_16"
+            android:id="@+id/P3_3"
             style="@style/DefaultStyle"
             android:onClick="onClick"/>
         
