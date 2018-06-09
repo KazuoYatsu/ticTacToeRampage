@@ -1,10 +1,11 @@
 package com.example.tictactoerampage;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import com.example.tictactoerampage.model.Celula;
-import com.example.tictactoerampage.model.ResultadoJogada;
-import com.example.tictactoerampage.model.TipoRegistroJogada;
+import com.example.tictactoerampage.model.Jogador;
 import com.example.tictactoerampage.service.Jogo;
-import com.example.tictactoerampage.service.Jogo.JogoListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -54,12 +55,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
 			}
 		});
 		
-		jogo = new Jogo(new JogoListener() {
+		jogo = new Jogo(new Observer() {
 			
 			@Override
-			public void fimDeJogo(TipoRegistroJogada vencedor) {
-				Log.d("vencedor", vencedor.name());
-				Toast.makeText(getApplicationContext(), vencedor.toString(), Time.SECOND * 3).show();
+			public void update(Observable observable, Object data) {
+				Jogador campeao = jogo.obterVencedor();
+				Log.d("vencedor", campeao.getTipo());
+				Toast.makeText(getApplicationContext(), campeao.getTipo().toString(), Time.SECOND * 3).show();
 			}
 		});
 		
@@ -79,10 +81,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
 		ImageView campo = (ImageView) v;
 		Celula celula   = obterCelula(campo);
 		Log.d("inf", "clicou");
-		ResultadoJogada resultadoJogada = jogo.jogar(celula);
+		jogo.jogar(celula);
 		Log.d("inf", "jogou");
-		Log.d("Jogador1","result: "+resultadoJogada.getEstado().getP1().toString());
-		Log.d("Jogador2","result: "+resultadoJogada.getEstado().getP2().toString());
+		//Log.d("Jogador1","result: "+resultadoJogada.getEstado().getP1().toString());
+		//Log.d("Jogador2","result: "+resultadoJogada.getEstado().getP2().toString());
 		if(campo.isEnabled()) {
 			switch(turno) {
 				case CRUZ:{
@@ -126,7 +128,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
 	
 	private void reset() {
 		GridLayout tabuleiro = (GridLayout) findViewById(R.id.tabuleiro);
-		jogo.reiniciar();
+		jogo = new Jogo(new Observer() {
+			@Override
+			public void update(Observable observable, Object data) {
+				Log.d("info", "reiniciou");
+			}
+		});
 		int gridCount = tabuleiro.getChildCount();
 		for(int i =0; i < gridCount;i++) {
 			ImageView campo = (ImageView) tabuleiro.getChildAt(i);

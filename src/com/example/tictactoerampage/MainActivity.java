@@ -3,8 +3,6 @@ package com.example.tictactoerampage;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,7 +23,7 @@ public class MainActivity extends Activity {
 		sobreButton.setOnClickListener(OpenActivity(AboutActivity.class));
 	}
 	
-	private OnClickListener OpenActivity (final Class activityClass) {
+	private OnClickListener OpenActivity (final Class<?> activityClass) {
 		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {

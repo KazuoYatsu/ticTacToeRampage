@@ -1,268 +1,77 @@
 package com.example.tictactoerampage.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Observer;
 
 import com.example.tictactoerampage.model.Celula;
-import com.example.tictactoerampage.model.EstadoJogo;
-import com.example.tictactoerampage.model.PosicaoPontuacao;
-import com.example.tictactoerampage.model.ResultadoJogada;
-import com.example.tictactoerampage.model.TipoPontuacao;
-import com.example.tictactoerampage.model.TipoRegistroJogada;
+import com.example.tictactoerampage.model.GerenciadorDePontuacao;
+import com.example.tictactoerampage.model.Jogador;
 
+import android.database.Observable;
 
-
-public class Jogo {
-	private EstadoJogo estado;
-	private TipoRegistroJogada[][] tabuleiro;
-	private TipoRegistroJogada jogador;
-	private ResultadoJogada jogada;
-	private List<PosicaoPontuacao> posicaoPontuacaoP1;
-	private List<PosicaoPontuacao> posicaoPontuacaoP2;
-	private JogoListener listener;
-	
-	public Jogo(JogoListener listener) {
-		this.reiniciar();
-		this.listener = listener;
+public class Jogo extends Observable<Observer>{
+	private Jogador jogadorBola;
+	private Jogador jogadorCruz;
+	private Jogador jogadorJogando;
+	private String[][] tabuleiro;
+	private GerenciadorDePontuacao gerenciadorDePontuacao;
+ 	
+	public Jogo(Observer callback){
+		this.jogadorBola 			= new Jogador(Jogador.JOGADOR_TIPO_BOLA);
+		this.jogadorBola 			= new Jogador(Jogador.JOGADOR_TIPO_CRUZ);
+		this.tabuleiro   			= new String[4][4];
+		this.gerenciadorDePontuacao = new GerenciadorDePontuacao();
+		this.registerObserver(callback);
 	}
-
-	public ResultadoJogada jogar(Celula celula) throws RuntimeException{
-		if(this.tabuleiro[celula.getLinha()][celula.getColuna()] != null)
-			throw new RuntimeException();
+	
+	public boolean estouJogando(Jogador jogador){
+		return jogadorJogando.equals(jogador);
+	}
+	
+	public Jogador proximoJogador(){
+		jogadorJogando = (jogadorJogando == null || estouJogando(jogadorCruz)) ? jogadorBola : jogadorCruz;
+		return jogadorJogando;
+	}
+	
+	public void jogar(Celula celula){
 		this.marcarPosicao(celula);
-		this.percorrerDiagonalCrescente(celula);
-		this.percorrerDiagonalDecrescente(celula);
-		this.percorrerHorizontalmente(celula);
-		this.percorrerVerticalmente(celula);
-		this.trocarJogador();
-		this.verificarFimDeJogo();
-		return this.jogada;
+		this.gerenciadorDePontuacao.verificarPontuacao(tabuleiro, celula);
+		this.proximoJogador();
+		this.verificarFimJogo();
 	}
 
-	public void reiniciar() {
-		// Tive que mexer nessa linha e colocar o tipo PosicaoPontuacao
-		this.posicaoPontuacaoP1 = new ArrayList<PosicaoPontuacao>();
-		this.posicaoPontuacaoP2 = new ArrayList<PosicaoPontuacao>();
-		this.estado = new EstadoJogo();
+	public void marcarPosicao(Celula celula){
 		
-		this.jogada = new ResultadoJogada();
-		
-		this.tabuleiro = new TipoRegistroJogada[4][4];
-		this.jogador = TipoRegistroJogada.P1;
-		
-		this.jogada.setEstado(this.estado);
-		this.jogada.setPontuacaoP1(this.posicaoPontuacaoP1);
-		this.jogada.setPontuacaoP2(this.posicaoPontuacaoP2);
-	}
-
-	private void marcarPosicao(Celula celula) {
-		this.tabuleiro[celula.getLinha()][celula.getColuna()] = this.jogador;
-	}
-
-	private void percorrerDiagonalDecrescente(Celula celula) {
-		int marcacoesConsecutivas = 0;
-		int indiceX = celula.getLinha();
-		int indiceY = celula.getColuna();
-		
-		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.DIAGONAL_DECRESCENTE);
-		
-		indiceX = 0;
-		indiceY = 3;
-		//encontrar inicio
-		//while (indiceX != 0 || indiceY != 4) {
-			//indiceX -= 1;
-			//indiceY += 1;
-		//}
-		
-		//percorrer até o fim para contar pontos
-		while (indiceX > 0 && indiceY > 0 && indiceX < 4 && indiceY < 4) {
-			if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
-				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
-					posicaoPontuacao.setxIni(indiceX);
-					posicaoPontuacao.setyIni(indiceY);
-				} else {
-					posicaoPontuacao.setxFim(indiceX);
-					posicaoPontuacao.setyFim(indiceY);
-				}
-				marcacoesConsecutivas += 1;
-			}else {
-				if(marcacoesConsecutivas < 3) {
-					posicaoPontuacao.resetPosicao();
-					marcacoesConsecutivas = 0;
-				}
-			}
-			indiceX += 1;
-			indiceY -= 1;
-		}
-		
-		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
-	}
-
-	private void percorrerDiagonalCrescente(Celula celula) {
-		int marcacoesConsecutivas = 0;
-		int indiceX = 0;
-		int indiceY = 3;
-		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.DIAGONAL_CRESCENTE);
-		
-		//percorrer até o fim para contar pontos
-		while (indiceX > 0 && indiceY > 0 && indiceX < 4 && indiceY < 4) {
-			if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
-				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
-					posicaoPontuacao.setxIni(indiceX);
-					posicaoPontuacao.setyIni(indiceY);
-				} else {
-					posicaoPontuacao.setxFim(indiceX);
-					posicaoPontuacao.setyFim(indiceY);
-				}
-				marcacoesConsecutivas += 1;
-			}else {
-				if(marcacoesConsecutivas < 3) {
-					posicaoPontuacao.resetPosicao();
-					marcacoesConsecutivas = 0;
-				}
-			}
-			indiceX += 1;
-			indiceY += 1;
-		}
-		
-		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
-	}
-
-	private void percorrerHorizontalmente(Celula celula) {
-		int marcacoesConsecutivas = 0;
-		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.HORIZONTAL);
-		int y = celula.getColuna();
-		for(int i = 0 ; i < 4 ; i++) {
-			if (this.isJogador(this.tabuleiro[i][y])) {
-				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
-					posicaoPontuacao.setxIni(i);
-					posicaoPontuacao.setyIni(y);
-				} else {
-					posicaoPontuacao.setxFim(i);
-					posicaoPontuacao.setyFim(y);
-				}
-				marcacoesConsecutivas += 1;
-			} else {
-				if(marcacoesConsecutivas < 3) {
-					posicaoPontuacao.resetPosicao();
-					marcacoesConsecutivas = 0;
-				}
-			}
-		}
-
-		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
-	}
-
-	private void percorrerVerticalmente(Celula celula) {
-		int marcacoesConsecutivas = 0;
-		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.VERTICAL);
-		int x = celula.getLinha();
-		for(int i = 0 ; i < 4 ; i++) {
-			if (this.isJogador(this.tabuleiro[x][i])) {
-				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
-					posicaoPontuacao.setxIni(x);
-					posicaoPontuacao.setyIni(i);
-				} else {
-					posicaoPontuacao.setxFim(x);
-					posicaoPontuacao.setyFim(i);
-				}
-				marcacoesConsecutivas += 1;
-			} else {
-				if(marcacoesConsecutivas < 3) {
-					posicaoPontuacao.resetPosicao();
-					marcacoesConsecutivas = 0;
-				}
-			}
-		}
-
-		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
-	}
-
-	private void pontuar(int marcacoesConsecutivas, PosicaoPontuacao posicaoPontuacao) {
-		int pontos = 0;
-
-		switch(marcacoesConsecutivas) {
-		case 3:
-			pontos = 3;
-			break;
-		case 4:
-			pontos = 2;
-			break;
-		default:
-			return;
-		}
-		atualizarPosicao(pontos, posicaoPontuacao);
-	}
-
-	private void atualizarPosicao(int novosPontos, PosicaoPontuacao posicaoPontuacao) {
-		boolean pontuado 				= false;
-		List<PosicaoPontuacao> posicoes = (this.jogador.equals(TipoRegistroJogada.P1))?this.posicaoPontuacaoP1:this.posicaoPontuacaoP2;
-		
-		for(PosicaoPontuacao posicao: posicoes) {
-			if(this.foiPontuado(posicaoPontuacao, posicoes)) {
-				posicoes.remove(posicao);
-				posicoes.add(posicaoPontuacao);
-				pontuado = true;
-			}
-		}
-		
-		if(!pontuado) {
-			if(novosPontos == 2)
-				novosPontos += 4;
-			posicoes.add(posicaoPontuacao);
-		}
-
-		if (this.jogador.equals(TipoRegistroJogada.P1)){
-			this.estado.setP1(this.estado.getP1()+novosPontos);
-		}else {
-			this.estado.setP2(this.estado.getP2()+novosPontos);			
-		}
 	}
 	
-	private boolean foiPontuado(PosicaoPontuacao posicaoPontuacao, List<PosicaoPontuacao> posicoes) {
-		for(PosicaoPontuacao posicao: posicoes) {
-			if(posicao.getTipoPontuacao().equals(posicaoPontuacao.getTipoPontuacao()) 
-					&& ((posicao.getxFim() == posicaoPontuacao.getxFim() && posicao.getyFim() == posicaoPontuacao.getyFim()) 
-							|| (posicao.getxFim() == posicaoPontuacao.getxFim() && posicao.getyFim() == posicaoPontuacao.getyFim()))) {
-				return true;
-			}
-		}
-		return false;
+	public Jogador getJogadorBola() {
+		return jogadorBola;
 	}
 
-	private void verificarFimDeJogo() {
-		boolean tudoPreenchido = true;
-		TipoRegistroJogada vencedor = null;
-		
-		for(int i = 0 ; i < 4 ; i++) {
-			for(int j = 0 ; j < 4 ; j++) {
-				if(this.tabuleiro[i][j] == null) {
-					tudoPreenchido = false;
-				}
-			}
-		}
-		
-		
-		if(tudoPreenchido) {
-			if(this.estado.getP1() > this.estado.getP2()) {
-				vencedor = TipoRegistroJogada.P1;
-			}else if(this.estado.getP1() < this.estado.getP2()) {
-				vencedor = TipoRegistroJogada.P2;
-			}
-			
-			this.listener.fimDeJogo(vencedor);
-		}
+	public void setJogadorBola(Jogador jogadorBola) {
+		this.jogadorBola = jogadorBola;
+	}
+
+	public Jogador getJogadorCruz() {
+		return jogadorCruz;
+	}
+
+	public void setJogadorCruz(Jogador jogadorCruz) {
+		this.jogadorCruz = jogadorCruz;
+	}
+
+	public Jogador getJogadorJogando() {
+		return jogadorJogando;
+	}
+
+	public void setJogadorJogando(Jogador jogadorJogando) {
+		this.jogadorJogando = jogadorJogando;
 	}
 	
-	private void trocarJogador() {
-		this.jogador = this.jogador.equals(TipoRegistroJogada.P1) ? TipoRegistroJogada.P2 : TipoRegistroJogada.P1;
+	public Jogador obterVencedor(){
+		return null;
 	}
 	
-	private boolean isJogador(TipoRegistroJogada jogada) {
-		return jogada != null && jogada.equals(this.jogador);
-	}
-	
-	public interface JogoListener {
-		public void fimDeJogo(TipoRegistroJogada vencedor);
+	public void verificarFimJogo(){
+		this.notifyAll();
 	}
 }
