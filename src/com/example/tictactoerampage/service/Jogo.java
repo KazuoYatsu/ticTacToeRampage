@@ -3,6 +3,7 @@ package com.example.tictactoerampage.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.tictactoerampage.model.Celula;
 import com.example.tictactoerampage.model.EstadoJogo;
 import com.example.tictactoerampage.model.PosicaoPontuacao;
 import com.example.tictactoerampage.model.ResultadoJogada;
@@ -25,21 +26,16 @@ public class Jogo {
 		this.listener = listener;
 	}
 
-	public ResultadoJogada jogar(int x, int y) throws RuntimeException{
-		if(this.tabuleiro[x][y] != null)
+	public ResultadoJogada jogar(Celula celula) throws RuntimeException{
+		if(this.tabuleiro[celula.getLinha()][celula.getColuna()] != null)
 			throw new RuntimeException();
-
-		this.marcarPosicao(x, y);
-
-		this.percorrerDiagonalCrescente(x, y);
-		this.percorrerDiagonalDecrescente(x, y);
-		this.percorrerHorizontalmente(x, y);
-		this.percorrerVerticalmente(x, y);
-
+		this.marcarPosicao(celula);
+		this.percorrerDiagonalCrescente(celula);
+		this.percorrerDiagonalDecrescente(celula);
+		this.percorrerHorizontalmente(celula);
+		this.percorrerVerticalmente(celula);
 		this.trocarJogador();
-
 		this.verificarFimDeJogo();
-		
 		return this.jogada;
 	}
 
@@ -59,25 +55,27 @@ public class Jogo {
 		this.jogada.setPontuacaoP2(this.posicaoPontuacaoP2);
 	}
 
-	private void marcarPosicao(int x, int y) {
-		this.tabuleiro[x][y] = this.jogador;
+	private void marcarPosicao(Celula celula) {
+		this.tabuleiro[celula.getLinha()][celula.getColuna()] = this.jogador;
 	}
 
-	private void percorrerDiagonalDecrescente(int x, int y) {
+	private void percorrerDiagonalDecrescente(Celula celula) {
 		int marcacoesConsecutivas = 0;
-		int indiceX = x;
-		int indiceY = y;
+		int indiceX = celula.getLinha();
+		int indiceY = celula.getColuna();
 		
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.DIAGONAL_DECRESCENTE);
 		
+		indiceX = 0;
+		indiceY = 3;
 		//encontrar inicio
-		while (indiceX != 0 || indiceY != 4) {
-			indiceX -= 1;
-			indiceY += 1;
-		}
+		//while (indiceX != 0 || indiceY != 4) {
+			//indiceX -= 1;
+			//indiceY += 1;
+		//}
 		
 		//percorrer até o fim para contar pontos
-		while (indiceX != 0 || indiceY != 0) {
+		while (indiceX > 0 && indiceY > 0 && indiceX < 4 && indiceY < 4) {
 			if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
 				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
 					posicaoPontuacao.setxIni(indiceX);
@@ -100,20 +98,14 @@ public class Jogo {
 		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
 	}
 
-	private void percorrerDiagonalCrescente(int x, int y) {
+	private void percorrerDiagonalCrescente(Celula celula) {
 		int marcacoesConsecutivas = 0;
-		int indiceX = x;
-		int indiceY = y;
+		int indiceX = 0;
+		int indiceY = 3;
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.DIAGONAL_CRESCENTE);
 		
-		//encontrar inicio
-		while (indiceX != 0 || indiceY != 0) {
-			indiceX -= 1;
-			indiceY -= 1;
-		}
-		
 		//percorrer até o fim para contar pontos
-		while (indiceX != 0 || indiceY != 0) {
+		while (indiceX > 0 && indiceY > 0 && indiceX < 4 && indiceY < 4) {
 			if(this.isJogador(this.tabuleiro[indiceX][indiceY])) {
 				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
 					posicaoPontuacao.setxIni(indiceX);
@@ -136,11 +128,11 @@ public class Jogo {
 		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
 	}
 
-	private void percorrerHorizontalmente(int x, int y) {
+	private void percorrerHorizontalmente(Celula celula) {
 		int marcacoesConsecutivas = 0;
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.HORIZONTAL);
-
-		for(int i = 0 ; i < 4 ; i++) {
+		int y = celula.getColuna();
+		for(int i = 0 ; i < 3 ; i++) {
 			if (this.isJogador(this.tabuleiro[i][y])) {
 				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {
 					posicaoPontuacao.setxIni(i);
@@ -161,10 +153,10 @@ public class Jogo {
 		this.pontuar(marcacoesConsecutivas, posicaoPontuacao);
 	}
 
-	private void percorrerVerticalmente(int x, int y) {
+	private void percorrerVerticalmente(Celula celula) {
 		int marcacoesConsecutivas = 0;
 		PosicaoPontuacao posicaoPontuacao = new PosicaoPontuacao(TipoPontuacao.VERTICAL);
-
+		int x = celula.getLinha();
 		for(int i = 0 ; i < 4 ; i++) {
 			if (this.isJogador(this.tabuleiro[x][i])) {
 				if(posicaoPontuacao.getxIni() == -1 && posicaoPontuacao.getyIni() == -1) {

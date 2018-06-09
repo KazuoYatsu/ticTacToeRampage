@@ -1,20 +1,17 @@
 package com.example.tictactoerampage;
 
+import com.example.tictactoerampage.model.Celula;
 import com.example.tictactoerampage.model.TipoRegistroJogada;
 import com.example.tictactoerampage.service.Jogo;
 import com.example.tictactoerampage.service.Jogo.JogoListener;
 
-import android.R.drawable;
-import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.GridLayout;
@@ -60,6 +57,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 			
 			@Override
 			public void fimDeJogo(TipoRegistroJogada vencedor) {
+				Log.d("vencedor", vencedor.name());
 				Toast.makeText(getApplicationContext(), vencedor.toString(), Time.SECOND * 3).show();
 			}
 		});
@@ -67,23 +65,26 @@ public class GameActivity extends Activity implements View.OnClickListener{
 	}
 	
 	
+	private Celula obterCelula(ImageView imgView) {
+		int pos    = tabuleiro.indexOfChild(imgView);
+		int line   = (int) Math.ceil(pos/4);
+		int column = pos % 4;
+		return new Celula(line, column);
+	}
+	
 	// Usdo para implementar toda a ação dos Botões do tabuleiro
 	@Override
 	public void onClick(View v) {
 		ImageView campo = (ImageView) v;
-		
-		int pos = tabuleiro.indexOfChild((ImageView)v);
-		int linha = pos /4;
-		int coluna = pos % 4;
-		
-		Log.d("Linha x Coluna", String.valueOf(linha) + "|" + String.valueOf(coluna));
-		
+		Celula celula   = obterCelula(campo);
+		Log.d("inf", "clicou");
+		jogo.jogar(celula);
+		Log.d("inf", "jogou");
 		if(campo.isEnabled()) {
 			switch(turno) {
 				case CRUZ:{
 						campo.setImageDrawable(resources.getDrawable(CRUZ_IMG_RESOURCE));
 						mudarVez(BOLA);
-						
 					break;
 				}
 				case BOLA:{
