@@ -1,34 +1,30 @@
 package com.example.tictactoerampage.service;
-
-import java.util.Observer;
-
 import com.example.tictactoerampage.model.Celula;
 import com.example.tictactoerampage.model.GerenciadorDePontuacao;
 import com.example.tictactoerampage.model.Jogador;
 import com.example.tictactoerampage.model.TipoJogador;
+import com.example.tictactoerampage.util.Callback;
 
-import java.util.Observable;
-
-public class Jogo extends Observable{
+public class Jogo{
     private Jogador jogadorBola;
     private Jogador jogadorCruz;
     private Jogador jogadorJogando;
     private TipoJogador[][] tabuleiro;
     private GerenciadorDePontuacao gerenciadorDePontuacao;
-    
+    private Callback callback;
     
     /**
      * Inicializar jogo.
      *
      * @param observer
      */
-    public Jogo(Observer callback){
+    public Jogo(Callback callback){
         this.jogadorBola            = new Jogador(TipoJogador.BOLA);
         this.jogadorCruz            = new Jogador(TipoJogador.CRUZ);
         this.gerenciadorDePontuacao = new GerenciadorDePontuacao();
         this.tabuleiro              = new TipoJogador[4][4];
+        this.callback               = callback;
         this.proximoJogador();
-        this.addObserver(callback);
     }
     
     /**
@@ -142,10 +138,10 @@ public class Jogo extends Observable{
 		if(tudoPreenchido) {
 			if(this.jogadorBola.obterPontuacao() > this.jogadorCruz.obterPontuacao()){
 				campeao = this.jogadorBola;
-			}else{
+			}else if(this.jogadorBola.obterPontuacao() < this.jogadorCruz.obterPontuacao()){
 				campeao = this.jogadorCruz;
 			}
-	        this.notifyObservers(campeao);
+	        this.callback.exec(campeao);
 		}
     }
     
