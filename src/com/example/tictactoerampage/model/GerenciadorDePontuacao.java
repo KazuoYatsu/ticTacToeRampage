@@ -204,7 +204,7 @@ public class GerenciadorDePontuacao {
     private void pontuar(LocalizacaoPonto localPonto, Integer marcacoes){
     	int pontos = 0;
         if(verificarSePontoEstaMarcado(jogadorJogando.getLocalizacaoPontos(), localPonto)) {
-            jogadorJogando.removerLocalizacaoPonto(localPonto);
+            //jogadorJogando.removerLocalizacaoPonto(localPonto);
             pontos = this.obterPontos(marcacoes, true);
         }else{
         	pontos = this.obterPontos(marcacoes, false);
