@@ -1,32 +1,52 @@
 package com.example.tictactoerampage.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Jogador {
-	public static final String JOGADOR_TIPO_BOLA = "O";
-	public static final String JOGADOR_TIPO_CRUZ = "X";
-	
-	private String tipo;
-	private ArrayList<Celula> jogadas;
-	
-	public Jogador(String tipo){
-		this.jogadas = new ArrayList<>();
-		this.tipo    = tipo;
-	}
+    private TipoJogador tipo;
+    private List<LocalizacaoPonto> localizacaoPontos;
+    private Integer pontos;
+    
+    public Jogador(TipoJogador tipo){
+        this.localizacaoPontos = new ArrayList<>();
+        this.tipo    = tipo;
+        this.pontos  = 0;
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    public TipoJogador getTipo() {
+        return tipo;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    public void setTipo(TipoJogador tipo) {
+        this.tipo = tipo;
+    }
 
-	public ArrayList<Celula> getJogadas() {
-		return jogadas;
-	}
+    public List<LocalizacaoPonto> getLocalizacaoPontos() {
+        return localizacaoPontos;
+    }
 
-	public void setJogadas(ArrayList<Celula> jogadas) {
-		this.jogadas = jogadas;
-	}
+    public void setLocalizacaoPontos(List<LocalizacaoPonto> jogadas) {
+        this.localizacaoPontos = jogadas;
+    }
+    
+    public void adicionarLocalizacaoPonto(LocalizacaoPonto localPonto) {
+    	this.localizacaoPontos.add(localPonto);
+    }
+    
+    public void removerLocalizacaoPonto(LocalizacaoPonto localPonto) {
+    	for(LocalizacaoPonto ponto : this.localizacaoPontos){
+    		if(ponto.getInicio().equals(localPonto.getInicio()) || ponto.getFim().equals(localPonto.getFim())){
+    			this.localizacaoPontos.remove(ponto);
+    		}
+    	}
+    }
+    
+    public void incrementarPontuacao(Integer pontos){
+    	this.pontos += pontos;
+    }
+    
+    public Integer obterPontuacao(){
+    	return this.pontos;
+    }
 }
