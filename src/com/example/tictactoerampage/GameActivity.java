@@ -75,6 +75,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 		return new Celula(line, column);
 	}
 	
+	
 	// Usdo para implementar toda a ação dos Botões do tabuleiro
 	@Override
 	public void onClick(View v) {
