@@ -63,8 +63,7 @@
    	        android:layout_height="wrap_content"
    	        android:layout_margin="3dp"
    	        android:background="@android:color/white"
-   	        android:text="@string/fechar"
-   	        style="@style/Widget.AppCompat.Button.Colored"/>
+   	        android:text="@string/fechar" />
         
     </LinearLayout>
 
