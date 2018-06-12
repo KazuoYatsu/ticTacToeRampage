@@ -69,7 +69,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
 		if(data != null){
 			Jogador campeao = (Jogador) data;
 			Log.d("vencedor", campeao.getTipo().name());
-			Toast.makeText(getApplicationContext(), campeao.getTipo().name(), Time.SECOND * 3).show();
+			Toast.makeText(getApplicationContext(), "O jogador " + campeao.getTipo().name() + " venceu!", Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(getApplicationContext(),"Deu empate!", Toast.LENGTH_LONG).show();
 		}
 	}
 	
