@@ -1,20 +1,20 @@
 package com.example.tictactoerampage;
 
-import com.example.tictactoerampage.model.TipoRegistroJogada;
-import com.example.tictactoerampage.service.Jogo;
-import com.example.tictactoerampage.service.Jogo.JogoListener;
 
-import android.R.drawable;
-import android.R.integer;
+import com.example.tictactoerampage.model.Celula;
+import com.example.tictactoerampage.model.Jogador;
+import com.example.tictactoerampage.model.TipoJogador;
+import com.example.tictactoerampage.service.Jogo;
+import com.example.tictactoerampage.util.Callback;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.media.Image;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.GridLayout;
@@ -23,114 +23,120 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameActivity extends Activity implements View.OnClickListener{
-	
 	private final int BOLA_IMG_RESOURCE = R.drawable.circle;
 	private final int CRUZ_IMG_RESOURCE = R.drawable.cross;
-	private final int BOLA = 0;
-	private final int CRUZ = 1;
 	private TextView vezTextView;
 	private Resources resources;
 	private ImageView replay;
 	private GridLayout tabuleiro; 
 	private int MAX = 16;
-	private int turno; //Quem começa, mas podemos sortear
 	private int camposRestantes = MAX;
+	private Drawable dwBola;
+	private Drawable dwCruz;
 	private Jogo jogo;
+	private TextView pontuacaoJogadorBola;
+	private TextView pontuacaoJogadorCruz;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game);
-		
-		resources = getResources();
-		vezTextView = (TextView) findViewById(R.id.jogador_vez_textView);
-		tabuleiro   = (GridLayout) findViewById(R.id.tabuleiro);
-		
-		mudarVez(BOLA);
-		
-		replay = (ImageView) findViewById(R.id.replay_image);
-		replay.setOnClickListener(new OnClickListener() {
-			@Override
+		this.setContentView(R.layout.activity_game);
+		this.resources    		  = getResources();
+		this.dwBola 			  = resources.getDrawable(BOLA_IMG_RESOURCE);
+		this.dwCruz 			  = resources.getDrawable(CRUZ_IMG_RESOURCE);
+		this.pontuacaoJogadorCruz = (TextView) findViewById(R.id.player1_points);	
+		this.pontuacaoJogadorBola = (TextView) findViewById(R.id.player2_points);
+		this.vezTextView 		  = (TextView) findViewById(R.id.jogador_vez_textView);
+		this.tabuleiro   		  = (GridLayout) findViewById(R.id.tabuleiro);
+		this.replay 	 		  = (ImageView) findViewById(R.id.replay_image);
+
+		this.replay.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				reset();
 			}
 		});
 		
-		jogo = new Jogo(new JogoListener() {
-			
-			@Override
-			public void fimDeJogo(TipoRegistroJogada vencedor) {
-				Toast.makeText(getApplicationContext(), vencedor.toString(), Time.SECOND * 3).show();
+		this.jogo = new Jogo(new Callback() {
+			public void exec(Object data) {
+				executarAposFimJogo(data);
 			}
 		});
-		
+		atualizarExibicaoJogador(jogo.getJogadorJogando().getTipo());
 	}
 	
+	private void executarAposFimJogo(Object data){
+		if(data != null){
+			Jogador campeao = (Jogador) data;
+			Log.d("vencedor", campeao.getTipo().name());
+			Toast.makeText(getApplicationContext(), "O jogador " + campeao.getTipo().name() + " venceu!", Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(getApplicationContext(),"Deu empate!", Toast.LENGTH_LONG).show();
+		}
+	}
 	
-	// Usdo para implementar toda a ação dos Botões do tabuleiro
+	private Celula obterCelula(ImageView imgView) {
+		int pos    = tabuleiro.indexOfChild(imgView);
+		int line   = (int) Math.ceil(pos/4);
+		int column = pos % 4;
+		return new Celula(line, column);
+	}
+	
 	@Override
 	public void onClick(View v) {
 		ImageView campo = (ImageView) v;
-		
-		int pos = tabuleiro.indexOfChild((ImageView)v);
-		int linha = pos /4;
-		int coluna = pos % 4;
-		
-		Log.d("Linha x Coluna", String.valueOf(linha) + "|" + String.valueOf(coluna));
-		
+		Celula celula   = obterCelula(campo);
+		this.jogo.jogar(celula);
+		this.pontuacaoJogadorBola.setText(this.jogo.getJogadorBola().obterPontuacao().toString());
+		this.pontuacaoJogadorCruz.setText(this.jogo.getJogadorCruz().obterPontuacao().toString());
 		if(campo.isEnabled()) {
-			switch(turno) {
-				case CRUZ:{
-						campo.setImageDrawable(resources.getDrawable(CRUZ_IMG_RESOURCE));
-						mudarVez(BOLA);
-						
-					break;
-				}
-				case BOLA:{
-						campo.setImageDrawable(resources.getDrawable(BOLA_IMG_RESOURCE));
-						mudarVez(CRUZ);
-					break;
-				}
-			}
+			atualizarExibicaoJogador(this.jogo.getJogadorJogando().getTipo(), campo);
 			campo.setEnabled(false);
-			camposRestantes--;
-			if(camposRestantes == 0) fimDeJogo();
+			this.camposRestantes--;
+			if(this.camposRestantes == 0) fimDeJogo();
 		}		
 	}
 	
-	// Muda a vez do jogador e também o TextView que informa a Vez
-	private void mudarVez(int proximoJogador) {
-		
-		switch(proximoJogador){
-			case BOLA :{
+	private void atualizarExibicaoJogador(TipoJogador tipo){
+		atualizarExibicaoJogador(tipo, null);
+	}
+	
+	private void atualizarExibicaoJogador(TipoJogador tipo, ImageView campo) {
+		switch(tipo){
+			case BOLA :
 				vezTextView.setText(resources.getString(R.string.jogador_bola_vez));
-				turno = BOLA;
+				if(campo != null) campo.setImageDrawable(dwCruz);
 				break;
-			}
-			case CRUZ:{
+			case CRUZ:
 				vezTextView.setText(resources.getString(R.string.jogador_cruz_vez));
-				turno = CRUZ;
+				if(campo != null) campo.setImageDrawable(dwBola);
 				break;
-			}
 		}
 	}
 	
 	private void fimDeJogo() {
-		vezTextView.setText(resources.getString(R.string.fim_de_jogo));
-		replay.setVisibility(View.VISIBLE);
+		this.vezTextView.setText(resources.getString(R.string.fim_de_jogo));
+		this.replay.setVisibility(View.VISIBLE);
 	}
 	
 	private void reset() {
 		GridLayout tabuleiro = (GridLayout) findViewById(R.id.tabuleiro);
+		this.jogo = new Jogo(new Callback() {
+			public void exec(Object data) {
+				executarAposFimJogo(data);
+			}
+		});
 		int gridCount = tabuleiro.getChildCount();
 		for(int i =0; i < gridCount;i++) {
 			ImageView campo = (ImageView) tabuleiro.getChildAt(i);
 			campo.setImageResource(android.R.color.transparent);
 			campo.setEnabled(true);
 		}
-		camposRestantes = MAX;
-		replay.setVisibility(View.GONE);	 
-		mudarVez(BOLA);
+		this.camposRestantes = MAX;
+		this.replay.setVisibility(View.GONE);	 
+		this.pontuacaoJogadorBola.setText(this.jogo.getJogadorBola().obterPontuacao().toString());
+		this.pontuacaoJogadorCruz.setText(this.jogo.getJogadorCruz().obterPontuacao().toString());
 	}
 	
 	private void showQuitGame() {

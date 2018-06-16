@@ -24,8 +24,8 @@
     <string name="regra1">• O Tic Tac Toe Rampage pode ser jogado ser jogado por 1 ou 2 jogadores.</string>
     <string name="regra2">• O jogador com a maior pontuação ao final do preenchimento do último campo disponível é o vencedor.</string>
     <string name="regra3">• O jogador pontua ao:</string>
-    <string name="regra4">• Completar uma linha, coluna ou diagonal com 3 símbolos iguais - ( x Pontos)</string>
-    <string name="regra5">• Completar uma linha, coluna ou diagonal com 4 símbolos iguais - ( x Pontos)</string>
+    <string name="regra4">• Completar uma linha, coluna ou diagonal com 3 símbolos iguais - (3 Pontos)</string>
+    <string name="regra5">• Completar uma linha, coluna ou diagonal com 4 símbolos iguais - (5 Pontos)</string>
     
 
 </resources>

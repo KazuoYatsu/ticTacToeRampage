@@ -48,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:background="@android:color/white"
-        style="?android:attr/buttonBarButtonStyle"
         android:text="@string/fechar" />
     
 </LinearLayout>
