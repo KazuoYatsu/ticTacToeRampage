@@ -11,7 +11,8 @@
     <string name="jogador_cruz_vez">Jogador Cruz</string>
     <string name="jogador_bola_vez">Jogador Bola</string>
     <string name="fim_de_jogo">Fim de jogo!</string>
-    <string name="jogar">Jogar</string>
+    <string name="jogar_pxp">Jogar PxP</string>
+    <string name="jogar_pxcpu">Jogar PxCPU</string>
     <string name="regras">Regras</string>
     <string name="sobre">Sobre</string>
     <string name="tictactoerampage">TicTacToeRampage</string>

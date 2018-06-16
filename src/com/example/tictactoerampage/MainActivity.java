@@ -1,5 +1,9 @@
 package com.example.tictactoerampage;
 
+import java.io.Serializable;
+
+import com.example.tictactoerampage.model.JogadorMaquina;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +18,16 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		final Button jogarButton  = (Button) findViewById(R.id.jogar_button);
+		final Button jogarPxp     = (Button) findViewById(R.id.jogar_button_pxp);
+		final Button jogarPxcpu   = (Button) findViewById(R.id.jogar_button_pxcpu);
 		final Button regrasButton = (Button) findViewById(R.id.regras_button);
 		final Button sobreButton  = (Button) findViewById(R.id.sobre_button);
 		
-		jogarButton.setOnClickListener(OpenActivity(GameActivity.class));
+		jogarPxp.setOnClickListener(OpenActivity(GameActivity.class));
+		jogarPxcpu.setOnClickListener(OpenActivity(GameActivity.class, new JogadorMaquina()));
 		regrasButton.setOnClickListener(OpenActivity(RulesActivity.class));		
 		sobreButton.setOnClickListener(OpenActivity(AboutActivity.class));
+		
 	}
 	
 	private OnClickListener OpenActivity (final Class<?> activityClass) {
@@ -28,6 +35,17 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(MainActivity.this, activityClass);
+				startActivity(intent);
+			}
+		};
+	}
+	
+	private OnClickListener OpenActivity (final Class<?> activityClass, final Serializable parameter) {
+		return new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, activityClass);
+				intent.putExtra("IA", parameter);
 				startActivity(intent);
 			}
 		};

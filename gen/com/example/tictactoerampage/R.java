@@ -52,24 +52,25 @@ public final class R {
         public static final int P3_1=0x7f0a0015;
         public static final int P3_2=0x7f0a0016;
         public static final int P3_3=0x7f0a0017;
-        public static final int action_settings=0x7f0a0021;
+        public static final int action_settings=0x7f0a0022;
         public static final int btnCloseAbout=0x7f0a0004;
-        public static final int btnCloseRules=0x7f0a0020;
+        public static final int btnCloseRules=0x7f0a0021;
         public static final int jogador_vez_textView=0x7f0a0006;
-        public static final int jogar_button=0x7f0a001c;
+        public static final int jogar_button_pxcpu=0x7f0a001d;
+        public static final int jogar_button_pxp=0x7f0a001c;
         public static final int player1_label=0x7f0a0018;
         public static final int player1_points=0x7f0a0019;
         public static final int player2_label=0x7f0a001a;
         public static final int player2_points=0x7f0a001b;
-        public static final int regras_button=0x7f0a001d;
+        public static final int regras_button=0x7f0a001e;
         public static final int replay_image=0x7f0a0005;
-        public static final int sobre_button=0x7f0a001e;
+        public static final int sobre_button=0x7f0a001f;
         public static final int tabuleiro=0x7f0a0007;
         public static final int txtAboutAppName=0x7f0a0000;
         public static final int txtAboutAuthors=0x7f0a0002;
         public static final int txtAboutMessage=0x7f0a0003;
         public static final int txtAboutVersion=0x7f0a0001;
-        public static final int txtRulesTittle=0x7f0a001f;
+        public static final int txtRulesTittle=0x7f0a0020;
     }
     public static final class integer {
         public static final int qtd_colunas=0x7f060001;
@@ -89,29 +90,30 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f070002;
         public static final int app_name=0x7f070000;
-        public static final int autores=0x7f07000f;
+        public static final int autores=0x7f070010;
         public static final int bola=0x7f070006;
         public static final int cruz=0x7f070005;
-        public static final int descricao=0x7f070010;
-        public static final int fechar=0x7f070011;
+        public static final int descricao=0x7f070011;
+        public static final int fechar=0x7f070012;
         public static final int fim_de_jogo=0x7f070009;
         public static final int hello_world=0x7f070001;
         public static final int jogador_bola_vez=0x7f070008;
         public static final int jogador_cruz_vez=0x7f070007;
-        public static final int jogar=0x7f07000a;
+        public static final int jogar_pxcpu=0x7f07000b;
+        public static final int jogar_pxp=0x7f07000a;
         public static final int menu=0x7f070004;
-        public static final int regra1=0x7f070014;
-        public static final int regra2=0x7f070015;
-        public static final int regra3=0x7f070016;
-        public static final int regra4=0x7f070017;
-        public static final int regra5=0x7f070018;
-        public static final int regras=0x7f07000b;
-        public static final int sobre=0x7f07000c;
-        public static final int tictactoerampage=0x7f07000d;
-        public static final int title_activity_about=0x7f070012;
+        public static final int regra1=0x7f070015;
+        public static final int regra2=0x7f070016;
+        public static final int regra3=0x7f070017;
+        public static final int regra4=0x7f070018;
+        public static final int regra5=0x7f070019;
+        public static final int regras=0x7f07000c;
+        public static final int sobre=0x7f07000d;
+        public static final int tictactoerampage=0x7f07000e;
+        public static final int title_activity_about=0x7f070013;
         public static final int title_activity_game=0x7f070003;
-        public static final int title_activity_rules=0x7f070013;
-        public static final int vers_o_1_0_0=0x7f07000e;
+        public static final int title_activity_rules=0x7f070014;
+        public static final int vers_o_1_0_0=0x7f07000f;
     }
     public static final class style {
         /** 

@@ -3,6 +3,7 @@ package com.example.tictactoerampage;
 
 import com.example.tictactoerampage.model.Celula;
 import com.example.tictactoerampage.model.Jogador;
+import com.example.tictactoerampage.model.JogadorMaquina;
 import com.example.tictactoerampage.model.TipoJogador;
 import com.example.tictactoerampage.service.Jogo;
 import com.example.tictactoerampage.util.Callback;
@@ -36,7 +37,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 	private Jogo jogo;
 	private TextView pontuacaoJogadorBola;
 	private TextView pontuacaoJogadorCruz;
-	
+	private JogadorMaquina jogadorMaquina;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
 			}
 		});
 		atualizarExibicaoJogador(jogo.getJogadorJogando().getTipo());
+		
+		if(getIntent().getSerializableExtra("IA") != null) {
+			this.jogadorMaquina = (JogadorMaquina) getIntent().getSerializableExtra("IA");
+		}
 	}
 	
 	private void executarAposFimJogo(Object data){
@@ -83,19 +88,54 @@ public class GameActivity extends Activity implements View.OnClickListener{
 		return new Celula(line, column);
 	}
 	
+	private boolean isPxCPU() {
+		return this.jogadorMaquina != null;
+	}
+	
 	@Override
 	public void onClick(View v) {
 		ImageView campo = (ImageView) v;
 		Celula celula   = obterCelula(campo);
 		this.jogo.jogar(celula);
+		this.marcarPosicaoDoTabuleiro(campo);
+		
+		if(this.isPxCPU()) {
+			this.jogarMaquina();
+		}
+		
 		this.pontuacaoJogadorBola.setText(this.jogo.getJogadorBola().obterPontuacao().toString());
 		this.pontuacaoJogadorCruz.setText(this.jogo.getJogadorCruz().obterPontuacao().toString());
-		if(campo.isEnabled()) {
-			atualizarExibicaoJogador(this.jogo.getJogadorJogando().getTipo(), campo);
-			campo.setEnabled(false);
-			this.camposRestantes--;
-			if(this.camposRestantes == 0) fimDeJogo();
-		}		
+		
+	}
+	
+	private void jogarMaquina() {
+		boolean campoDisponivel   = false;
+		Celula celulaGerada       = this.jogadorMaquina.gerarCelula();
+		int posicaoCelula         = (celulaGerada.getLinha() * 4) + celulaGerada.getColuna();
+		ImageView campoPretendido = (ImageView) this.tabuleiro.getChildAt(posicaoCelula);
+		campoDisponivel   		  = this.campoVazio(campoPretendido);
+		
+		while(!campoDisponivel) {
+			posicaoCelula   = (posicaoCelula + 1) % 16;
+			campoPretendido = (ImageView) this.tabuleiro.getChildAt(posicaoCelula);
+			campoDisponivel = this.campoVazio(campoPretendido);
+		};
+		//Atualizando a célula
+		celulaGerada.setLinha(posicaoCelula / 4);
+		celulaGerada.setColuna(posicaoCelula % 4);
+		this.jogo.jogar(celulaGerada);
+		this.marcarPosicaoDoTabuleiro(campoPretendido);
+	}
+	
+	private void marcarPosicaoDoTabuleiro(ImageView campo) {
+		atualizarExibicaoJogador(this.jogo.getJogadorJogando().getTipo(), campo);
+		campo.setEnabled(false);
+		this.camposRestantes--;
+		if(this.camposRestantes == 0) fimDeJogo();
+	}
+	
+	private boolean campoVazio(ImageView campo) {
+		return campo.isEnabled();
 	}
 	
 	private void atualizarExibicaoJogador(TipoJogador tipo){
@@ -134,6 +174,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 			campo.setEnabled(true);
 		}
 		this.camposRestantes = MAX;
+		this.vezTextView.setText(resources.getString(R.string.jogador_bola_vez));
 		this.replay.setVisibility(View.GONE);	 
 		this.pontuacaoJogadorBola.setText(this.jogo.getJogadorBola().obterPontuacao().toString());
 		this.pontuacaoJogadorCruz.setText(this.jogo.getJogadorCruz().obterPontuacao().toString());

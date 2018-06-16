@@ -27,9 +27,14 @@
             android:orientation="vertical" >
 
             <Button
-                android:id="@+id/jogar_button"
+                android:id="@+id/jogar_button_pxp"
                 style="@style/MenuButtonStyle"
-                android:text="@string/jogar" />
+                android:text="@string/jogar_pxp" />
+            
+            <Button
+                android:id="@+id/jogar_button_pxcpu"
+                style="@style/MenuButtonStyle"
+                android:text="@string/jogar_pxcpu" />
 
             <Button
                 android:id="@+id/regras_button"
