@@ -1,6 +1,5 @@
 package com.example.tictactoerampage.service;
 import com.example.tictactoerampage.model.Celula;
-import com.example.tictactoerampage.model.GerenciadorDePontuacao;
 import com.example.tictactoerampage.model.Jogador;
 import com.example.tictactoerampage.model.TipoJogador;
 import com.example.tictactoerampage.util.Callback;

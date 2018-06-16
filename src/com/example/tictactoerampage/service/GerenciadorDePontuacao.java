@@ -1,6 +1,12 @@
-package com.example.tictactoerampage.model;
+package com.example.tictactoerampage.service;
 
 import java.util.List;
+
+import com.example.tictactoerampage.model.Celula;
+import com.example.tictactoerampage.model.Jogador;
+import com.example.tictactoerampage.model.LocalizacaoPonto;
+import com.example.tictactoerampage.model.TipoJogador;
+import com.example.tictactoerampage.model.TipoPontuacao;
 
 public class GerenciadorDePontuacao {
     private TipoJogador tabuleiro[][];
